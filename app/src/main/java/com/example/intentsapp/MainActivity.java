@@ -1,11 +1,11 @@
 package com.example.intentsapp;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -29,7 +29,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         Button btnTela1 = findViewById(R.id.btn_tela1);
-        Button btnTela2 = findViewById(R.id.btn_tela2);
+        Button btnWhatsapp = findViewById(R.id.btn_whatsapp);
+        Button btnBuscar = findViewById(R.id.btn_buscar);
 
         EditText editTextNome = findViewById(R.id.editText_nome);
 
@@ -46,15 +47,36 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
-        btnTela2.setOnClickListener(
+        btnBuscar.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast.makeText(MainActivity.this, "Tela 2", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Buscar", Toast.LENGTH_SHORT).show();
+                        Intent intentBuscar = new Intent(Intent.ACTION_VIEW);
+                        intentBuscar.setData(Uri.parse("https://www.google.com/search?q=" + editTextNome.getText().toString()));
+                        startActivity(intentBuscar);
 
                     }
                 }
         );
+
+        btnWhatsapp.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(MainActivity.this, "Whatsapp", Toast.LENGTH_SHORT).show();
+                        String nome = editTextNome.getText().toString();
+
+                        Intent intentWhatsapp = new Intent(Intent.ACTION_SEND);
+                        intentWhatsapp.setPackage("com.whatsapp");
+                        intentWhatsapp.setType("text/plain");
+                        intentWhatsapp.putExtra(Intent.EXTRA_TEXT,nome);
+                        startActivity(intentWhatsapp);
+
+                    }
+                }
+        );
+
 
     }
 }
